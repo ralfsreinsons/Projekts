@@ -5,5 +5,5 @@ kord= [geo['lat'], geo['lon']]
 print(geo)
 
 
-laikapst= requests.get('https://api.tomorrow.io/v4/weather/forecast?location=42.3478,-71.0466&apikey=daDpfCTk68foELkxKjdeWq6WyPSTEdCC').json()
+laikapst= requests.get('https://api.tomorrow.io/v4/weather/forecast?location={kord}&apikey=daDpfCTk68foELkxKjdeWq6WyPSTEdCC').json()
 
