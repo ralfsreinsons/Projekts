@@ -1,1 +1,2 @@
-piej_laikapstakli= {'temperatūra': temp, 'temperatūra pēc jūtām', 'gaisa mitrums', 'nokrišņi', 'vēja ātrums, brāzma un virziens'}
+for i in range(16):
+    print(laikazinas['list'][i])
