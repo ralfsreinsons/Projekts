@@ -11,12 +11,18 @@ saule = requests.get('https://api.sunrise-sunset.org/json?lat='+ str(lat)+'&lng=
 saullekts = saule['sunrise']
 saulriets= saule['sunset']
 dienas_gar = saule['day_length']
-temp= 1
-piej_laikapstakli= {'temperatūra', 'temperatūra pēc jūtām', 'gaisa mitrums', 'nokrišņi', "vēja ātrums, brāzma un virziens"}
 
+
+
+piej_laikapstakli= ["temperatūra", "temperatūra pēc jūtām", "gaisa mitrums", "nokrišņi", "vējš", "spiediens", "redzamība", "mākoņu daudzums", "saullēkts", "saulriets"]
+print(piej_laikapstakli)
+
+izv_laikapstakli= input("Ievadiet nepieciešamās prognozes no pieejamajām:")
+vajadz = ['temp', 'feels_like']
+prognoze = []
 
 for i in range(16):
-    print(laikazinas['list'][i]['main']['temp'])
-
-
-
+        for k in range(len(vajadz)):
+            temp = laikazinas['list'][i]['main'].pop(vajadz[k])
+            prognoze.append(temp)
+            print(prognoze)
