@@ -19,10 +19,21 @@ print(piej_laikapstakli)
 
 izv_laikapstakli= input("Ievadiet nepieciešamās prognozes no pieejamajām:")
 vajadz = ['temp', 'feels_like']
-prognoze = []
+
 
 for i in range(16):
-        for k in range(len(vajadz)):
-            temp = laikazinas['list'][i]['main'].pop(vajadz[k])
-            prognoze.append(temp)
-            print(prognoze)
+    temp = laikazinas['list'][i]['main']['temp']
+    feels_like = laikazinas['list'][i]['main']['feels_like']
+    pressure = laikazinas['list'][i]['main']['pressure']
+    humidity = laikazinas['list'][i]['main']['humidity']
+    weather = laikazinas['list'][i]['weather'][0]['main']
+    clouds = laikazinas['list'][i]['clouds']['all']
+    wind_speed = laikazinas['list'][i]['wind']['speed']
+    visibility = laikazinas['list'][i]['visibility']
+    pop = laikazinas['list'][i]['pop']
+
+
+    prognoze_trish=[temp, feels_like, pressure, humidity, weather, clouds, wind_speed, visibility, pop]
+
+
+    print(prognoze_trish)
