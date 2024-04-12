@@ -18,22 +18,24 @@ piej_laikapstakli= ["temperatūra", "temperatūra pēc jūtām", "gaisa mitrums"
 print(piej_laikapstakli)
 
 izv_laikapstakli= input("Ievadiet nepieciešamās prognozes no pieejamajām:")
-vajadz = ['temp', 'feels_like']
 
 
 for i in range(16):
     temp = laikazinas['list'][i]['main']['temp']
-    feels_like = laikazinas['list'][i]['main']['feels_like']
-    pressure = laikazinas['list'][i]['main']['pressure']
-    humidity = laikazinas['list'][i]['main']['humidity']
-    weather = laikazinas['list'][i]['weather'][0]['main']
-    clouds = laikazinas['list'][i]['clouds']['all']
-    wind_speed = laikazinas['list'][i]['wind']['speed']
-    visibility = laikazinas['list'][i]['visibility']
-    pop = laikazinas['list'][i]['pop']
+    tempjutam = laikazinas['list'][i]['main']['feels_like']
+    spiediens = laikazinas['list'][i]['main']['pressure']
+    gaisamitrums = laikazinas['list'][i]['main']['humidity']
+    laikapstakli = laikazinas['list'][i]['weather'][0]['main']
+    laikaapraksts=laikazinas['list'][i]['weather'][0]['description']
+    makonudaudz = laikazinas['list'][i]['clouds']['all']
+    vejaatrums = laikazinas['list'][i]['wind']['speed']
+    vejavirziens = laikazinas['list'][i]['wind']['deg']
+    vejabrazma = laikazinas['list'][i]['wind']['gust']
+    redzamiba = laikazinas['list'][i]['visibility']
+    nokrisnuiesp = laikazinas['list'][i]['pop']
 
 
     prognoze_trish=[temp, feels_like, pressure, humidity, weather, clouds, wind_speed, visibility, pop]
-
-
     print(prognoze_trish)
+
+vajadzprognoze = izv_laikapstakli.split(' ')
