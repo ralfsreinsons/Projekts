@@ -14,11 +14,11 @@ dienas_gar = saule['day_length']
 
 
 
-piej_laikapstakli= ["temperatūra", "temperatūra pēc jūtām","Spiediens", "gaisa mitrums", "nokrišņi", "Nokriu apraksts","mākoņu daudzums", "vēja atrums","veja virziens","veja brazma", "redzamība",  "nokrisnu iespeja", "laiks"]
+piej_laikapstakli= ["temperatūra", "temperatūra pēc jūtām","spiediens", "gaisa mitrums", "nokrišņi", "Nokriu apraksts","mākoņu daudzums", "vēja ātrums","vēja virziens","vēja brēzma", "redzamība",  "nokriēnu iespējamība", "laiks"]
 print(piej_laikapstakli)
 
 izv_laikapstakli= input("Ievadiet nepieciešamās prognozes no pieejamajām:")
-izv_laikapstakli.split(" ")
+izv_laikapstakli=izv_laikapstakli.split(" ")
 
 for i in range(16):
     temp = laikazinas['list'][i]['main']['temp']
@@ -40,7 +40,8 @@ for i in range(16):
     prognoze3h=dict()
     for i in range(len(prognoze_trish)):
         prognoze3h.update({piej_laikapstakli[i] : prognoze_trish[i]})
-    print(prognoze3h)
+    for k in range(len(izv_laikapstakli)):
+        print(prognoze3h[izv_laikapstakli[k]])
 
 
 
