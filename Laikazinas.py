@@ -17,20 +17,22 @@ dienas_gar = saule['day_length']
 
 
 
-piej_laikapstakli= ["1-temperatūra", "2-temperatūra pēc jūtām","3-spiediens", "4-gaisa mitrums", "5-nokrišņi", "6-nokrišņu apraksts","7-mākoņu daudzums", "8-vēja ātrums","9-vēja virziens","10-vēja brēzma", "11-redzamība",  "12-nokrišņu iespējamība"]
-mervienibas = [" C°", " C°", " mbar", " %", "", "", " %", " m/s", "°", " m/s", " m", " %", ""]
+piej_laikapstakli= ["1-temperatūra", "2-temperatūra pēc jūtām","3-spiediens", "4-gaisa mitrums", "5-nokrišņi", "6-nokrišņu apraksts","7-mākoņu daudzums", "8-vēja ātrums","9-vēja virziens","10-vēja brēzma", "11-redzamība",  "12-nokrišņu iespējamība", "13-saulriets", "14-saullēkts"]
+mervienibas = [" C°", " C°", " mbar", " %", "", "", " %", " m/s", "°", " m/s", " m", " %", "UTC", "UTC", ""]
 for i in piej_laikapstakli:
     print(i, end='\n')
 
-izv_laikapstakli = input("Ievadiet nepieciešamās prognozes no pieejamajām:") + ', 13'
+izv_laikapstakli = input("Ievadiet nepieciešamās prognozes no pieejamajām:") + ', 15'
 izv_laikapstakli = izv_laikapstakli.split(",")
 
 for i in range(len(izv_laikapstakli)):
     izv_laikapstakli[i] = izv_laikapstakli[i].replace(" ", "")
-    if izv_laikapstakli[i].isnumeric() and int(izv_laikapstakli[i])>0 and int(izv_laikapstakli[i])<14:
+    if izv_laikapstakli[i].isalpha():
+        raise Exception( str(i+1) + ".ievadītas parametrs nav skaitlis")
+    elif int(izv_laikapstakli[i])>0 and int(izv_laikapstakli[i])<16:
         pass
     else:
-        raise Exception("{i}. ievadītas skaitlis neatbilst prasījumiem")
+        raise Exception( str(i+1) + ".ievadītas parametrs skaitlis ir ārpus piedāvātajiem parametriem")
 
 
 # Testēšanai - pareizi ievadīts izvēlētais laikapstākļu parametrs
@@ -54,10 +56,11 @@ for i in range(16):
     redzamiba = laikazinas['list'][i]['visibility']
     nokrisnuiesp = laikazinas['list'][i]['pop']
     laiks = laikazinas['list'][i]['dt_txt']
-    prognoze_trish_list=[temp, tempjutam , spiediens , gaisamitrums, laikapstakli, laikaapraksts, makonudaudz, vejaatrums, vejavirziens, vejabrazma, redzamiba, nokrisnuiesp, laiks]
+    prognoze_trish_list=[temp, tempjutam , spiediens , gaisamitrums, laikapstakli, laikaapraksts, makonudaudz, vejaatrums, vejavirziens, vejabrazma, redzamiba, nokrisnuiesp, saullekts, saulriets, laiks]
     
     for i in range(len(izv_laikapstakli)):
         print(str(prognoze_trish_list[int(izv_laikapstakli[i])-1]) + mervienibas[int(izv_laikapstakli[i])-1])
+
 # Ievada izmantojot vrdus nevis ciparus
 #     prognoze3h=dict()
 #     for i in range(len(prognoze_trish_list)):
