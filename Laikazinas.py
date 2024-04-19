@@ -1,4 +1,7 @@
 import requests
+import sqlite3
+connection = sqlite3.connect("laikazinu_db.db")
+
 pilseta = input("Ievadiet pilsetu:")
 geo= requests.get('http://api.openweathermap.org/geo/1.0/direct?q=' + pilseta +'&limit=1&appid=d5f36631cc643ceb4aca81a4466d58e1').json()[0]
 
@@ -14,14 +17,28 @@ dienas_gar = saule['day_length']
 
 
 
-piej_laikapstakli= ["temperatūra", "temperatūra pēc jūtām","spiediens", "gaisa mitrums", "nokrišņi", "Nokriu apraksts","mākoņu daudzums", "vēja ātrums","vēja virziens","vēja brēzma", "redzamība",  "nokriēnu iespējamība", "laiks"]
-print(piej_laikapstakli)
+piej_laikapstakli= ["1-temperatūra", "2-temperatūra pēc jūtām","3-spiediens", "4-gaisa mitrums", "5-nokrišņi", "6-nokrišņu apraksts","7-mākoņu daudzums", "8-vēja ātrums","9-vēja virziens","10-vēja brēzma", "11-redzamība",  "12-nokrišņu iespējamība"]
+mervienibas = [" C°", " C°", " mbar", " %", "", "", " %", " m/s", "°", " m/s", " m", " %", ""]
+for i in piej_laikapstakli:
+    print(i, end='\n')
 
-izv_laikapstakli = input("Ievadiet nepieciešamās prognozes no pieejamajām:")
+izv_laikapstakli = input("Ievadiet nepieciešamās prognozes no pieejamajām:") + ', 13'
 izv_laikapstakli = izv_laikapstakli.split(",")
+
 for i in range(len(izv_laikapstakli)):
     izv_laikapstakli[i] = izv_laikapstakli[i].replace(" ", "")
-print(izv_laikapstakli)
+    if izv_laikapstakli[i].isnumeric() and int(izv_laikapstakli[i])>0 and int(izv_laikapstakli[i])<14:
+        pass
+    else:
+        raise Exception("{i}. ievadītas skaitlis neatbilst prasījumiem")
+
+
+# Testēšanai - pareizi ievadīts izvēlētais laikapstākļu parametrs
+# rez=0
+# for i in range(len(piej_laikapstakli)):
+#     for k in range(len(izv_laikapstakli)):
+#         if izv_laikapstakli[k]== piej_laikapstakli[i]:
+#             rez+=1
 
 for i in range(16):
     temp = laikazinas['list'][i]['main']['temp']
@@ -37,18 +54,15 @@ for i in range(16):
     redzamiba = laikazinas['list'][i]['visibility']
     nokrisnuiesp = laikazinas['list'][i]['pop']
     laiks = laikazinas['list'][i]['dt_txt']
-
-
     prognoze_trish_list=[temp, tempjutam , spiediens , gaisamitrums, laikapstakli, laikaapraksts, makonudaudz, vejaatrums, vejavirziens, vejabrazma, redzamiba, nokrisnuiesp, laiks]
-    prognoze3h=dict()
-    for i in range(len(prognoze_trish_list)):
-        prognoze3h.update({piej_laikapstakli[i] : prognoze_trish_list[i]})
-    for k in range(len(izv_laikapstakli)):
-        print(prognoze3h[izv_laikapstakli[k]])
-print(prognoze3h)
-
-
-
     
-
-
+    for i in range(len(izv_laikapstakli)):
+        print(str(prognoze_trish_list[int(izv_laikapstakli[i])-1]) + mervienibas[int(izv_laikapstakli[i])-1])
+# Ievada izmantojot vrdus nevis ciparus
+#     prognoze3h=dict()
+#     for i in range(len(prognoze_trish_list)):
+#         prognoze3h.update({piej_laikapstakli[i] : prognoze_trish_list[i]})
+#     for k in range(len(izv_laikapstakli)):
+#         print(prognoze3h[izv_laikapstakli[k]])
+# print(prognoze3h)
+    
