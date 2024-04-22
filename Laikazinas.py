@@ -70,6 +70,8 @@ for i in range(16):
 #         print(prognoze3h[izv_laikapstakli[k]])
 # print(prognoze3h)
     
-curs.execute("INSERT INTO izsaukumi VALUES (2244560, 'Janis Platais', 'dsds', 5)")
+row= curs.execute("SELECT  FROM izsaukumi;").fetchall()
+
+print(row)
 
 
