@@ -3,7 +3,6 @@ import sqlite3
 connection = sqlite3.connect("laikazinu_db.db")
 curs = connection.cursor()
 
-
 pilseta = input("Ievadiet pilsetu:")
 geo= requests.get('http://api.openweathermap.org/geo/1.0/direct?q=' + pilseta +'&limit=1&appid=d5f36631cc643ceb4aca81a4466d58e1').json()[0]
 
@@ -70,13 +69,7 @@ for i in range(16):
 #     for k in range(len(izv_laikapstakli)):
 #         print(prognoze3h[izv_laikapstakli[k]])
 # print(prognoze3h)
-
-
-
-row=curs.execute("SELECT laika_prognoze FROM izsaukumi").fetchmany(3)
-
-print(row)
-
-connection.commit()
-connection.close()
     
+curs.execute("INSERT INTO izsaukumi VALUES (2244560, 'Janis Platais', 'dsds', 5)")
+
+
