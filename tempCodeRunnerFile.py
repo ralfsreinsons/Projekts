@@ -1,1 +1,1 @@
-['all']
+    # curs.execute("INSERT INTO Laikapstakli VALUES {izvadamie_dati}")

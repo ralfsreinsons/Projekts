@@ -58,10 +58,12 @@ for i in range(16):
     nokrisnuiesp = laikazinas['list'][i]['pop']
     laiks = laikazinas['list'][i]['dt_txt']
     prognoze_trish_list=[temp, tempjutam , spiediens , gaisamitrums, laikapstakli, laikaapraksts, makonudaudz, vejaatrums, vejavirziens, vejabrazma, redzamiba, nokrisnuiesp, saullekts, saulriets, laiks]
-    
+    izvadamie_dati= []
     for i in range(len(izv_laikapstakli)):
-        print(str(prognoze_trish_list[int(izv_laikapstakli[i])-1]) + mervienibas[int(izv_laikapstakli[i])-1])
-
+        izvadamie_dati.append(str(prognoze_trish_list[int(izv_laikapstakli[i])-1]) + mervienibas[int(izv_laikapstakli[i])-1])
+    # curs.execute("INSERT INTO Laikapstakli VALUES {izvadamie_dati}")
+    
+    print(izvadamie_dati)
 # Ievada izmantojot vrdus nevis ciparus
 #     prognoze3h=dict()
 #     for i in range(len(prognoze_trish_list)):
@@ -70,8 +72,7 @@ for i in range(16):
 #         print(prognoze3h[izv_laikapstakli[k]])
 # print(prognoze3h)
     
-row= curs.execute("SELECT  FROM izsaukumi;").fetchall()
-
+row= curs.execute("SELECT Laikapstakli FROM izsaukumi;").fetchall()
 print(row)
 
 
