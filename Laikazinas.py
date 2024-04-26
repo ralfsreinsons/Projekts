@@ -1,6 +1,6 @@
 import requests
 import sqlite3
-connection = sqlite3.connect("laikazinu_db.db")
+connection = sqlite3.connect("projekta_datubaze.db")
 curs = connection.cursor()
 
 pilseta = input("Ievadiet pilsetu:")
@@ -64,6 +64,7 @@ for i in range(16):
     # curs.execute("INSERT INTO Laikapstakli VALUES {izvadamie_dati}")
     
     print(izvadamie_dati)
+
 # Ievada izmantojot vrdus nevis ciparus
 #     prognoze3h=dict()
 #     for i in range(len(prognoze_trish_list)):
