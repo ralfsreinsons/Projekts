@@ -61,7 +61,6 @@ for i in range(16):
     izvadamie_dati= []
     for i in range(len(izv_laikapstakli)):
         izvadamie_dati.append(str(prognoze_trish_list[int(izv_laikapstakli[i])-1]) + mervienibas[int(izv_laikapstakli[i])-1])
-    # curs.execute("INSERT INTO Laikapstakli VALUES {izvadamie_dati}")
     
     print(izvadamie_dati)
 
@@ -72,8 +71,14 @@ for i in range(16):
 #     for k in range(len(izv_laikapstakli)):
 #         print(prognoze3h[izv_laikapstakli[k]])
 # print(prognoze3h)
-    
-row= curs.execute("SELECT Laikapstakli FROM izsaukumi;").fetchall()
-print(row)
 
+# for i in  range(len(izv_laikapstakli)):
+#     izv_laikapstakli[i]= piej_laikapstakli[int(izv_laikapstakli[i])-1]
+# izv_laikapstakli= str(izv_laikapstakli)
+
+a= [ 1, 2]
+curs.execute("INSERT INTO izsaukumi VALUES(?, ?) WHERE ID_izsaukuma = 1", a)
+row= curs.execute("SELECT ID_izsaukuma FROM izsaukumi;").fetchall()
+print(row)
+curs.comit()
 
