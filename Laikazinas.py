@@ -1,5 +1,6 @@
 import requests
 import sqlite3
+import PySimpleGUI as sg
 connection = sqlite3.connect("projekta_datubaze.db")
 curs = connection.cursor()
 
@@ -98,6 +99,15 @@ for row in rows:
     print(row)
 
 
-
 connection.close()
 
+
+layout = [
+ [sg.Text('Sveika, Pasaule!')],
+ [sg.Button('Ok')],
+]
+#3 - Logs (Window)
+window = sg.Window('Virsraksts', layout)
+#4 - Notikumu bezgalīgais cikls un to apstrāde (Event loop / handling)
+event, value = window.read()
+#5 - Loga aizvērš
