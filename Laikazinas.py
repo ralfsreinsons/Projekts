@@ -72,13 +72,32 @@ for i in range(16):
 #         print(prognoze3h[izv_laikapstakli[k]])
 # print(prognoze3h)
 
-# for i in  range(len(izv_laikapstakli)):
-#     izv_laikapstakli[i]= piej_laikapstakli[int(izv_laikapstakli[i])-1]
-# izv_laikapstakli= str(izv_laikapstakli)
+izv_laikapstakli = izv_laikapstakli[:-1]
+for i in range(len(izv_laikapstakli)):
+    izv_laikapstakli[i]= piej_laikapstakli[int(izv_laikapstakli[i]) - 1]
 
-a= [ 1, 2]
-curs.execute("INSERT INTO izsaukumi VALUES(?, ?) WHERE ID_izsaukuma = 1", a)
-row= curs.execute("SELECT ID_izsaukuma FROM izsaukumi;").fetchall()
-print(row)
-curs.comit()
+
+def get_next_id(column_name):
+    curs.execute(f"SELECT MAX({column_name}) FROM izsaukumi")
+    max_id = curs.fetchone()[0]
+    return max_id + 1 if max_id is not None else 1
+
+def insert_values_as_row(values):
+    nakam_id_izsaukuma = get_next_id("ID_izsaukuma")
+    nakam_id_lietotaja = get_next_id("ID_lietotaja")
+    curs.execute("INSERT INTO izsaukumi (ID_izsaukuma, Parametri, ID_lietotaja) VALUES (?, ?, ?)", 
+                 (nakam_id_izsaukuma, ','.join(str(v) for v in values), nakam_id_lietotaja))
+    connection.commit()
+
+
+insert_values_as_row(izv_laikapstakli)
+
+
+rows = curs.execute("SELECT Parametri FROM izsaukumi ORDER BY ID_izsaukuma DESC LIMIT 5").fetchall()
+for row in rows:
+    print(row)
+
+
+
+connection.close()
 
