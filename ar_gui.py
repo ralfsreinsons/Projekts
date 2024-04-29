@@ -10,7 +10,7 @@ mervienibas = [" C°", " C°", " mbar", " %", "", "", " %", " m/s", "°", " m/s"
 
 
 layout = [
-    [sg.Text('Laikapstākļi:', font=('Helvetica', 12))],
+    [sg.Text('Laikapstākļi:')],
 ]
 
 
@@ -56,7 +56,7 @@ for i in range(len(izv_laikapstakli)):
     izv_laikapstakli[i] = izv_laikapstakli[i].replace(" ", "")
     if izv_laikapstakli[i].isalpha():
         raise Exception( str(i+1) + ".ievadītas parametrs nav skaitlis")
-    elif izv_laikapstakli[i]>0 and int(izv_laikapstakli[i])<16:
+    elif int(izv_laikapstakli[i])>0 and int(izv_laikapstakli[i])<16:
         pass
     else:
         raise Exception( str(i+1) + ".ievadītas parametrs skaitlis ir ārpus piedāvātajiem parametriem")
@@ -109,7 +109,7 @@ def get_next_id(column_name):
     max_id = curs.fetchone()[0]
     return max_id + 1 if max_id is not None else 1
 
-def insert_values_as_row(values):
+def ievieto(a):
     nakam_id_izsaukuma = get_next_id("ID_izsaukuma")
     nakam_id_lietotaja = get_next_id("ID_lietotaja")
     curs.execute("INSERT INTO izsaukumi (ID_izsaukuma, Parametri, ID_lietotaja) VALUES (?, ?, ?)", 
@@ -117,7 +117,7 @@ def insert_values_as_row(values):
     connection.commit()
 
 
-insert_values_as_row(izv_laikapstakli)
+ievieto(izv_laikapstakli)
 
 
 rows = curs.execute("SELECT Parametri FROM izsaukumi ORDER BY ID_izsaukuma DESC LIMIT 5").fetchall()
