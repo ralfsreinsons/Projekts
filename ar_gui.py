@@ -3,8 +3,41 @@ import sqlite3
 import PySimpleGUI as sg
 connection = sqlite3.connect("projekta_datubaze.db")
 curs = connection.cursor()
+piej_laikapstakli= ["1-temperatūra", "2-temperatūra pēc jūtām","3-spiediens", "4-gaisa mitrums", "5-nokrišņi", "6-nokrišņu apraksts","7-mākoņu daudzums", "8-vēja ātrums","9-vēja virziens","10-vēja brēzma", "11-redzamība",  "12-nokrišņu iespējamība", "13-saulriets", "14-saullēkts"]
 
-pilseta = input("Ievadiet pilsetu:")
+
+mervienibas = [" C°", " C°", " mbar", " %", "", "", " %", " m/s", "°", " m/s", " m", " %", "UTC", "UTC", ""]
+
+
+layout = [
+    [sg.Text('Laikapstākļi:', font=('Helvetica', 12))],
+]
+
+
+for item in piej_laikapstakli:
+    layout.append([sg.Text(item)])
+
+layout.append([sg.Text('Ievadiet pilsetu:', font=('Helvetica', 12)), sg.InputText(key='-PILS-')])
+layout.append([sg.Text('Ievadiet nepieciešamās prognozes no pieejamajām:', font=('Helvetica', 12)), sg.InputText(key='-LAIKA-')])
+
+layout.append([sg.Button('Ok'), sg.Button('Apskatīt laikapstākļus')])  # Added another button
+
+window = sg.Window('', layout)
+
+while True:
+    event, values = window.read()
+    if event == sg.WINDOW_CLOSED:
+        break
+    elif event == 'Ok':
+        izv_laikapstakli = values['-LAIKA-'] + ', 15'
+        pilseta = values['-PILS-']
+        izv_laikapstakli = izv_laikapstakli.split(",")
+        window.close()  # Close window when Ok button is clicked
+    elif event == 'Apskatīt laikapstākļus':
+        # Do something when the button is clicked, for example, print the values
+        print("Pilseta:", values['-PILS-'])
+        print("Laikapstākļi:", values['-LAIKA-'])
+
 geo= requests.get('http://api.openweathermap.org/geo/1.0/direct?q=' + pilseta +'&limit=1&appid=d5f36631cc643ceb4aca81a4466d58e1').json()[0]
 
 lat= geo['lat']  
@@ -19,19 +52,11 @@ dienas_gar = saule['day_length']
 
 
 
-piej_laikapstakli= ["1-temperatūra", "2-temperatūra pēc jūtām","3-spiediens", "4-gaisa mitrums", "5-nokrišņi", "6-nokrišņu apraksts","7-mākoņu daudzums", "8-vēja ātrums","9-vēja virziens","10-vēja brēzma", "11-redzamība",  "12-nokrišņu iespējamība", "13-saulriets", "14-saullēkts"]
-mervienibas = [" C°", " C°", " mbar", " %", "", "", " %", " m/s", "°", " m/s", " m", " %", "UTC", "UTC", ""]
-for i in piej_laikapstakli:
-    print(i, end='\n')
-
-izv_laikapstakli = input("Ievadiet nepieciešamās prognozes no pieejamajām:") + ', 15'
-izv_laikapstakli = izv_laikapstakli.split(",")
-
 for i in range(len(izv_laikapstakli)):
     izv_laikapstakli[i] = izv_laikapstakli[i].replace(" ", "")
     if izv_laikapstakli[i].isalpha():
         raise Exception( str(i+1) + ".ievadītas parametrs nav skaitlis")
-    elif int(izv_laikapstakli[i])>0 and int(izv_laikapstakli[i])<16:
+    elif izv_laikapstakli[i]>0 and int(izv_laikapstakli[i])<16:
         pass
     else:
         raise Exception( str(i+1) + ".ievadītas parametrs skaitlis ir ārpus piedāvātajiem parametriem")
@@ -60,6 +85,7 @@ for i in range(16):
     laiks = laikazinas['list'][i]['dt_txt']
     prognoze_trish_list=[temp, tempjutam , spiediens , gaisamitrums, laikapstakli, laikaapraksts, makonudaudz, vejaatrums, vejavirziens, vejabrazma, redzamiba, nokrisnuiesp, saullekts, saulriets, laiks]
     izvadamie_dati= []
+
     for i in range(len(izv_laikapstakli)):
         izvadamie_dati.append(str(prognoze_trish_list[int(izv_laikapstakli[i])-1]) + mervienibas[int(izv_laikapstakli[i])-1])
     
@@ -78,8 +104,8 @@ for i in range(len(izv_laikapstakli)):
     izv_laikapstakli[i]= piej_laikapstakli[int(izv_laikapstakli[i]) - 1]
 
 
-def get_next_id(id):
-    curs.execute(f"SELECT MAX({id}) FROM izsaukumi")
+def get_next_id(column_name):
+    curs.execute(f"SELECT MAX({column_name}) FROM izsaukumi")
     max_id = curs.fetchone()[0]
     return max_id + 1 if max_id is not None else 1
 
@@ -102,12 +128,5 @@ for row in rows:
 connection.close()
 
 
-layout = [
- [sg.Text('Sveika, Pasaule!')],
- [sg.Button('Ok')],
-]
 
-window = sg.Window('Virsraksts', layout)
-
-event, value = window.read()
 
