@@ -12,7 +12,7 @@ piej_laikapstakli = ["1-temperatūra", "2-temperatūra pēc jūtām", "3-spiedie
 mervienibas = [" C°", " C°", " mbar", " %", "", "", " %", " m/s", "°", " m/s", " m", " %", "UTC", "UTC", ""]
 
 layout = [
-    [sg.Text('Laikapstākļi:', font=('Helvetica', 12))],
+    [sg.Text('Laikapstākļi:')],
 ]
 
 for item in piej_laikapstakli:
@@ -81,8 +81,11 @@ while True:
         pass
     elif event == 'Ielādēt iepriekšējos iestatījumus':
         izv_laikapstakli= curs.execute("SELECT Parametri FROM izsaukumi ORDER BY ID_izsaukuma DESC LIMIT 1").fetchone()
+        izv_laikapstakli=str(izv_laikapstakli)
+        izv_laikapstakli= izv_laikapstakli[2:-3].split(',')
         for i in range(len(izv_laikapstakli)):
-            izv_laikapstakli[i] = izv_laikapstakli[i].split('-')[0]
+            izv_laikapstakli[i]= izv_laikapstakli[i].split('-')[0]
+
         window['-LAIKA-'].update(','.join(izv_laikapstakli))
 
 izv_laikapstakli = izv_laikapstakli[:-1]
